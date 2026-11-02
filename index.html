@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markdown Previewer</title>
+  
+  <!-- Highlight.js syntax stylesheet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-theme" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Top Navigation & Tools Bar -->
+  <header class="app-header">
+    <div class="header-left">
+      <span class="app-title">Markdown Previewer</span>
+
+      <div class="divider"></div>
+
+      <!-- Formatting Toolbar -->
+      <div class="toolbar">
+        <button type="button" class="tool-btn" data-action="h1" title="Heading 1">H1</button>
+        <button type="button" class="tool-btn" data-action="h2" title="Heading 2">H2</button>
+        <button type="button" class="tool-btn" data-action="bold" title="Bold (Ctrl+B)">B</button>
+        <button type="button" class="tool-btn italic" data-action="italic" title="Italic (Ctrl+I)">I</button>
+        <button type="button" class="tool-btn" data-action="strike" title="Strikethrough">S</button>
+        <span class="tool-sep"></span>
+        <button type="button" class="tool-btn" data-action="code" title="Inline code">&lt;/&gt;</button>
+        <button type="button" class="tool-btn" data-action="codeblock" title="Code block">```</button>
+        <button type="button" class="tool-btn" data-action="quote" title="Blockquote">""</button>
+        <button type="button" class="tool-btn" data-action="table" title="Insert table">Table</button>
+        <span class="tool-sep"></span>
+        <button type="button" class="tool-btn" data-action="ul" title="Unordered list">• List</button>
+        <button type="button" class="tool-btn" data-action="ol" title="Numbered list">1. List</button>
+        <button type="button" class="tool-btn" data-action="task" title="Task checkbox">[ ] Task</button>
+        <button type="button" class="tool-btn" data-action="link" title="Insert link">Link</button>
+      </div>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-right">
+      <!-- View Modes -->
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-toggle active" data-view="split">Split</button>
+        <button type="button" class="btn btn-toggle" data-view="edit">Write</button>
+        <button type="button" class="btn btn-toggle" data-view="preview">Read</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- File Controls -->
+      <button id="theme-btn" class="btn" type="button">Dark Mode</button>
+      <button id="open-file-btn" class="btn" type="button">Open File</button>
+      <input type="file" id="file-input" accept=".md,.markdown,.txt" style="display: none;" />
+      <button id="copy-html-btn" class="btn" type="button">Copy HTML</button>
+      <button id="download-btn" class="btn btn-primary" type="button">Export .md</button>
+      <button id="clear-btn" class="btn btn-danger" type="button">Clear</button>
+    </div>
+  </header>
+
+  <!-- Main Workspace (Editor + Resizer + Preview) -->
+  <main class="workspace mode-split" id="workspace">
+    <!-- Editor Pane -->
+    <section class="pane editor-pane" id="editor-pane">
+      <div class="pane-bar">
+        <span class="pane-title">Markdown Input</span>
+        <span class="cursor-pos" id="cursor-pos">Ln 1, Col 1</span>
+      </div>
+      <textarea id="markdown-input" spellcheck="false" placeholder="Write Markdown here, or drag and drop a .md file..."></textarea>
+    </section>
+
+    <!-- Draggable Divider -->
+    <div class="resizer" id="resizer" title="Drag to resize panes (double click to reset)"></div>
+
+    <!-- Preview Pane -->
+    <section class="pane preview-pane" id="preview-pane">
+      <div class="pane-bar">
+        <span class="pane-title">Rendered Output</span>
+        <label class="sync-scroll-label" title="Synchronize editor and preview scrolling">
+          <input type="checkbox" id="sync-scroll" checked /> Sync Scroll
+        </label>
+      </div>
+      <article id="preview-output" class="markdown-body"></article>
+    </section>
+  </main>
+
+  <!-- Status Bar -->
+  <footer class="app-footer">
+    <div class="footer-left">
+      <span class="save-status" id="save-status">Saved</span>
+    </div>
+    <div class="footer-right">
+      <span id="word-count">0 words</span>
+      <span class="dot">&bull;</span>
+      <span id="char-count">0 chars</span>
+      <span class="dot">&bull;</span>
+      <span id="line-count">1 line</span>
+      <span class="dot">&bull;</span>
+      <span id="read-time">&lt; 1 min read</span>
+    </div>
+  </footer>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- CDN Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  
+  <script src="js/app.js"></script>
+</body>
+</html>
